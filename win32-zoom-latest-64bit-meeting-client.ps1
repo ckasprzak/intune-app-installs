@@ -6,9 +6,11 @@
 
 #  /i ZoomInstallerFull.msi /quiet /qn /norestart /log install.log ZoomAutoUpdate=1 zNoDesktopShortCut=True
 $InstallArguments = "/qn /norestart ZoomAutoUpdate=1 zNoDesktopShortCut=True"
+
 # Script execution pull path with file and current folder!
 $mypath = $MyInvocation.MyCommand.Path
 $Justpath = Split-Path $mypath -Parent
+
 # Newest 64bit MSI Installer - https://zoom.us/client/latest/ZoomInstallerFull.msi?archType=x64
 $FullLink = "https://zoom.us/client/latest/ZoomInstallerFull.msi?archType=x64"
 $fileName = "ZoomInstallerFull.msi"
@@ -28,6 +30,7 @@ $dlVersion = $shellFolder.GetDetailsOf($shellFile,24)
 # Start Logging install
 $LogName = "Zoom_x64_" + $dlVersion +"_Install"
 Start-Transcript -Path "C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\$LogName.log" -Append -Force
+
 # Start the Install
 Write-Host "Installing - $fileName"
 $Install = Start-Process -FilePath "$JustPath\$fileName" -ArgumentList $InstallArguments -Wait -PassThru
